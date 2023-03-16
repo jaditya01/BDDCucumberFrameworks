@@ -5,9 +5,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
+
+import java.util.List;
 
 public class SingleUserDetails {
 
@@ -27,14 +30,17 @@ public class SingleUserDetails {
     @Then("Response should be display {string}")
     public void response_should_be_display(String statusCode) {
         int code=  response.then().extract().statusCode();
-        String responsecode = String.valueOf(code);
+        String responseCode = String.valueOf(code);
         System.out.println("My code"+ code);
-        Assert.assertEquals(responsecode,statusCode);
+        Assert.assertEquals(responseCode,statusCode);
     }
     @And("User {string} should match")
     public void user_should_match(String firstName) {
-       String name = response.then().extract().body().jsonPath().get("FirstName");
-        System.out.println("Name "+name);
+       Response res  = response.then().extract().response();
+
+       JsonPath js = new JsonPath(res.asString());
+        System.out.println(js.getString("data.first_name[1]"));
+
     }
 
 
