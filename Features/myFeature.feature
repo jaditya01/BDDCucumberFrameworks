@@ -17,3 +17,4 @@ Feature: Validate the API Service of ReqRes
     Examples:
     |id|First Name|Status Code|
     |2 |Janet     |200        |
+
