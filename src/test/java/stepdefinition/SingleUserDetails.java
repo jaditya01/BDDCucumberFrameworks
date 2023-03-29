@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.qameta.allure.Allure;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -49,6 +50,7 @@ public class SingleUserDetails {
         JsonToJavaObject jsonread = new JsonToJavaObject();
        jsonread.readJson();
 
+        Allure.addAttachment("print allure output",f.asString());
        // System.out.println(f.asString());
        // System.out.println(JsonToJavaObject.readJson(f.asString()));
 
