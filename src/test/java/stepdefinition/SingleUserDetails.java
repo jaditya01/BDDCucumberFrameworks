@@ -1,5 +1,7 @@
 package stepdefinition;
 
+import POJO.JsonToJavaObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -7,6 +9,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 
@@ -35,11 +38,19 @@ public class SingleUserDetails {
         Assert.assertEquals(responseCode,statusCode);
     }
     @And("User {string} should match")
-    public void user_should_match(String firstName) {
+    public void user_should_match(String firstName) throws JsonProcessingException {
        Response res  = response.then().extract().response();
 
        JsonPath js = new JsonPath(res.asString());
-        System.out.println(js.getString("data.first_name[1]"));
+       ResponseBody f =res.getBody();
+
+        //System.out.println(js.getString("data.first_name[1]"));
+
+        JsonToJavaObject jsonread = new JsonToJavaObject();
+       jsonread.readJson();
+
+       // System.out.println(f.asString());
+       // System.out.println(JsonToJavaObject.readJson(f.asString()));
 
     }
 
